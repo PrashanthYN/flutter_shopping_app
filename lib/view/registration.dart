@@ -13,14 +13,28 @@ class RegistrationState extends State<RegistrationScreen> {
  TextEditingController phoneNumController=TextEditingController();
  TextEditingController passwordController=TextEditingController();
 
+ void validateFormFields() {
+    if(userNameTextController.text.isEmpty){
+
+    }
+ }
+
+ @override
+  void dispose() {
+    userNameTextController.dispose();
+    emailController.dispose();
+    phoneNumController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
  @override
   Widget build(BuildContext context) {
     var registrationButton = Container(
         width: 150,
         child: RaisedButton(
             color: Colors.red, child: Text("Registration", style: TextStyle(color: Colors.white),), onPressed: () {
-            print(emailController.text);
-            print(userNameTextController.text);
+            validateFormFields();
         }));
 
     return Scaffold(
@@ -39,7 +53,6 @@ class RegistrationState extends State<RegistrationScreen> {
                 //user name
 
                 TextField(
-
                   controller: userNameTextController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -85,3 +98,4 @@ class RegistrationState extends State<RegistrationScreen> {
     );
   }
 }
+
