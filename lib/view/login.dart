@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo_two_login/repository/repository.dart';
@@ -136,14 +138,20 @@ class LoginState extends State<LoginScreen>{
 
   //listen to validation response
   void listenLoginValidationResponse() {
-    dataRepository.getLoginValidationStream().listen((event) {
+    StreamSubscription subscription= dataRepository.getLoginValidationStream().listen((event) {
       print("observer 1");
       print(event);
       if(event){
         //navigating to home screen.
       }
     });
+
+    //add this line to cancel the subscrption
+    //subscription.cancel();
   }
+
+
+
 }
 
 
