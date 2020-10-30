@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo_two_login/model/user.dart';
 import 'package:flutter_demo_two_login/repository/repository.dart';
 
 
@@ -32,6 +34,14 @@ class LoginState extends State<LoginScreen>{
 
   @override
   Widget build(BuildContext context) {
+
+    //sample json string
+    String jsonString="{\"id\": \"1\",\"user_name\": \"user_name 1\",\"user_password\": \"user_password 1\",\"email_id\": \"email_id 1\",\"mobile_number\": \"mobile_number 1\"}";
+
+    //Convert json to user instance
+    User user=User.fromJson(jsonDecode(jsonString));
+    print(user.email_id);
+
 
     //1. Create a form with global key
     final _loginFormKey=GlobalKey<FormState>();

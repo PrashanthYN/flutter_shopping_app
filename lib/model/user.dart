@@ -15,9 +15,17 @@ class User{
       this.mobile_number});
 
 
+ factory User.fromJson(dynamic json){
+     return User(
+       id: json["id"],
+       user_name: json["user_name"],
+       user_password: json["user_password"],
+       email_id: json["email_id"],
+       mobile_number: json["mobile_number"]
+     );
+  }
 
-
-  //Example function for json encoding decoding
+  /*
   void convertUserStringToJson(){
     String jsonString="{\"id\": \"1\",\"user_name\": \"user_name 1\",\"user_password\": \"user_password 1\",\"email_id\": \"email_id 1\",\"mobile_number\": \"mobile_number 1\"}";
 
@@ -34,5 +42,5 @@ class User{
     print(newJsonString);
 
   }
-
+*/
 }
