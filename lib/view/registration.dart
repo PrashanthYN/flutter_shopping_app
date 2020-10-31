@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo_two_login/network/network.dart';
+import 'package:flutter_demo_two_login/model/user.dart';
+import 'package:flutter_demo_two_login/repository/repository.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -8,16 +11,28 @@ class RegistrationScreen extends StatefulWidget {
 
 class RegistrationState extends State<RegistrationScreen> {
 
+  DataRepository dataRepository=DataRepository();
+
  TextEditingController userNameTextController=TextEditingController();
  TextEditingController emailController=TextEditingController();
  TextEditingController phoneNumController=TextEditingController();
  TextEditingController passwordController=TextEditingController();
 
  void validateFormFields() {
-    if(userNameTextController.text.isEmpty){
-
-    }
+   //validation success, no fields are empty
+ dataRepository.registerUser(User(user_name: userNameTextController.text,user_password: passwordController.text,email_id: emailController.text,mobile_number: phoneNumController.text));
  }
+
+ @override
+  void initState() {
+
+   //Testing network call
+   /*NetworkDao().registerUser(User(user_name: "Mahalakshmi",user_password: "",email_id: "maha@gmail.com",mobile_number: "9876543210")).then((value) => {
+      print("Registration status: $value")
+    });*/
+   listenToRegistration();
+
+  }
 
  @override
   void dispose() {
@@ -96,6 +111,12 @@ class RegistrationState extends State<RegistrationScreen> {
             ),
           )),
     );
+  }
+
+  void listenToRegistration() {
+   dataRepository.getRegistrationStream().listen((event) {
+     print("Inside UI: Registration status:$event");
+   });
   }
 }
 
