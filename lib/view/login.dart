@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo_two_login/model/user.dart';
 import 'package:flutter_demo_two_login/repository/repository.dart';
 
+import 'home.dart';
+
 
 class LoginScreen extends StatefulWidget{
   @override
@@ -19,12 +21,14 @@ class LoginState extends State<LoginScreen>{
    String userPassword;
    DataRepository dataRepository= new DataRepository();
 
+   bool _process_busy=false;
+
+
   @override
   void initState() {
     super.initState();
     //call login validation observe method
     listenLoginValidationResponse();
-
   }
 
 
@@ -56,13 +60,16 @@ class LoginState extends State<LoginScreen>{
         //if validation is correct , it returns true value
         if(_loginFormKey.currentState.validate()){
           print("form fields are validated");
+
+          setState(() {
+            _process_busy=true;
+          });
+
           _loginFormKey.currentState.save();
           validateUserFromAPI(userEmail, userPassword);
           //jump to
         }
         }));
-
-
 
   //2.add a textform field in Form widget with validation logic
     return Form(
@@ -73,7 +80,8 @@ class LoginState extends State<LoginScreen>{
           centerTitle: true,
         ),
 
-        body: Container(
+        body: _process_busy? Center(child: CircularProgressIndicator()) :
+        Container(
           margin: EdgeInsets.all(20),
           child: Column(
             children: <Widget>[
@@ -152,9 +160,19 @@ class LoginState extends State<LoginScreen>{
     StreamSubscription subscription= dataRepository.getLoginValidationStream().listen((event) {
       print("observer 1");
       print(event);
+
+      setState(() {
+        _process_busy=false;
+      });
+
       if(event){
         //navigating to home screen.
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HomeScreen()));
       }
+
     });
 
     //add this line to cancel the subscrption

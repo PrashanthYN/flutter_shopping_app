@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_demo_two_login/model/product.dart';
 import 'package:flutter_demo_two_login/model/user.dart';
 import 'package:flutter_demo_two_login/network/network.dart';
 
@@ -7,9 +8,13 @@ class DataRepository{
 
   NetworkDao networkDao=NetworkDao();
 
+
+
   var streamController=StreamController<bool>.broadcast();
 
   var resgistrationStreamController=StreamController<bool>.broadcast();
+
+  var productListStreamController=StreamController<List<Product>>.broadcast();
 
 
 /*  bool validateUser(String userId,String password){
@@ -44,9 +49,21 @@ class DataRepository{
     networkDao.registerUser(user).then((value) => {
       //handle return value of future function
       resgistrationStreamController.add(value)
+
     });
   }
 
+
+  Stream<List<Product>> getProductListStream(){
+    return productListStreamController.stream;
+  }
+
+
+  void getProducts(){
+    networkDao.getProductList().then((value) => {
+      productListStreamController.add(value)
+    });
+  }
 
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo_two_login/network/network.dart';
 import 'package:flutter_demo_two_login/model/user.dart';
 import 'package:flutter_demo_two_login/repository/repository.dart';
+import 'package:flutter_demo_two_login/view/home.dart';
 
 class RegistrationScreen extends StatefulWidget {
   @override
@@ -17,6 +18,8 @@ class RegistrationState extends State<RegistrationScreen> {
  TextEditingController emailController=TextEditingController();
  TextEditingController phoneNumController=TextEditingController();
  TextEditingController passwordController=TextEditingController();
+
+  bool _process_busy=false;
 
  void validateFormFields() {
    //validation success, no fields are empty
@@ -49,7 +52,11 @@ class RegistrationState extends State<RegistrationScreen> {
         width: 150,
         child: RaisedButton(
             color: Colors.red, child: Text("Registration", style: TextStyle(color: Colors.white),), onPressed: () {
-            validateFormFields();
+              //show progressbar
+               setState(() {
+                 _process_busy=true;
+               });
+              validateFormFields();
         }));
 
     return Scaffold(
@@ -57,7 +64,7 @@ class RegistrationState extends State<RegistrationScreen> {
         title: Text('Register'),
         centerTitle: true,
       ),
-      body: Container(
+      body: _process_busy? Center(child: CircularProgressIndicator()) :Container(
 
           color: Colors.white,
           margin: EdgeInsets.all(20),
@@ -115,7 +122,17 @@ class RegistrationState extends State<RegistrationScreen> {
 
   void listenToRegistration() {
    dataRepository.getRegistrationStream().listen((event) {
-     print("Inside UI: Registration status:$event");
+
+     //hide the progress bar
+      setState(() {
+        _process_busy=false;
+      });
+     if(event){
+       Navigator.push(
+           context,
+           MaterialPageRoute(
+               builder: (context) => HomeScreen()));
+     }
    });
   }
 }

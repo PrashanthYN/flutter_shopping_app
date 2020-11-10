@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter_demo_two_login/model/product.dart';
 import 'package:flutter_demo_two_login/model/user.dart';
 import 'package:flutter_demo_two_login/network/config.dart';
+import 'package:flutter_demo_two_login/util/constants.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkDao {
@@ -36,4 +38,21 @@ class NetworkDao {
       return false;
     }
   }
+
+
+  Future<List<Product>> getProductList() async{
+
+    var response=await http.get(ApiURL.productsURL);
+    print(response.statusCode);
+    var respStr=response.body;
+
+    //convert json raw string into specific objects like list
+    var productList=jsonDecode(respStr) as List;
+
+    //convert json object into product object
+    List<Product> products=productList.map((e) => Product.fromJson(e)).toList();
+
+    return products;
+  }
+
 }
