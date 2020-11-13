@@ -8,58 +8,71 @@ import 'ListScreen.dart';
 import 'future_builder_example.dart';
 
 class HomeScreen extends StatefulWidget {
-
   @override
-  HomeState createState()=> HomeState();
-
+  HomeState createState() => HomeState();
 }
 
-class HomeState extends State<HomeScreen>{
-
-  ListScreen listScreen= ListScreen();
+class HomeState extends State<HomeScreen> {
+  ListScreen listScreen = ListScreen();
 
   @override
   Widget build(BuildContext context) {
+    return DefaultTabController(
+        length: 3,
+        child: Scaffold(
+            drawer: Drawer(
+                child: ListView(
+              children: <Widget>[
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  color: Colors.orange,
+                  child: Center(child:Text('Prashanth', style: TextStyle(color: Colors.white,fontSize: 16))),
+                ),
+                ListTile(
+                  title: Text("Your orders"),
+                  onTap: () {
+                    //close the screen on top of screen stack
+                    Navigator.pop(context);
 
-    return DefaultTabController(length: 3, child: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: Text('OMAZON'),
-        bottom: TabBar(
-          tabs: [
-            Tab(icon: Icon(Icons.message),text: 'List example'),
-            Tab(icon: Icon(Icons.message),text: 'Grid example'),
-            Tab(icon: Icon(Icons.message),text: 'Future builder')
-          ],
-        ),
-      ),
-      body: TabBarView(
-       children: <Widget>[
-         ListScreen(),
-         GridViewScreen(),
-         SampleFutureBuilder()
-       ],
-
-      )
-    ));
-
+                  },
+                ),
+                ListTile(
+                  title: Text("Wishlist"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  title: Text("Offers"),
+                  onTap: () {},
+                )
+              ],
+            )),
+            appBar: AppBar(
+              backgroundColor: Colors.orange,
+              title: Text('OMAZON'),
+              bottom: TabBar(
+                tabs: [
+                  Tab(icon: Icon(Icons.message), text: 'List example'),
+                  Tab(icon: Icon(Icons.message), text: 'Grid example'),
+                  Tab(icon: Icon(Icons.message), text: 'Future builder')
+                ],
+              ),
+            ),
+            body: TabBarView(
+              children: <Widget>[
+                ListScreen(),
+                GridViewScreen(),
+                SampleFutureBuilder()
+              ],
+            )));
   }
-
-
-
-
 }
-
-
 
 //Implement tabs
 
 // 1. Tab controller
 // 2. tabs
 // 3. tab body view
-
-
-
 
 //Material effect
 /*

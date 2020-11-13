@@ -15,7 +15,7 @@ class DemoApp extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title:'DemoCalculator',
+      title:'OMAZON',
       theme:ThemeData(
           primaryColor: Colors.green,
           visualDensity: VisualDensity.adaptivePlatformDensity

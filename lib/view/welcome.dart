@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo_two_login/apppreferences/apppreferences.dart';
+import 'package:flutter_demo_two_login/view/home.dart';
 import 'package:flutter_demo_two_login/view/login.dart';
 import 'package:flutter_demo_two_login/view/registration.dart';
 
 class WelcomeScreen extends StatelessWidget {
+
+  AppPreferences appPreferences=AppPreferences();
+
   @override
   Widget build(BuildContext context) {
+
+    appPreferences.isLoggedIn().then((value) => {
+      if(value!=null && value){
+       //replace this screen with new screen
+        Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => HomeScreen()))
+      }
+    });
+
     var loginButton = Container(
         width: 150,
         child: RaisedButton(
             color: Colors.blue,
             child: Text("Login"),
             onPressed: () {
+              // push new screen on top of existing screen
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => LoginScreen()));
             }));
@@ -28,11 +43,7 @@ class WelcomeScreen extends StatelessWidget {
             }));
 
     return Scaffold(
-        body:
-
-
-
-            Stack(
+        body: Stack(
               children: [
                 Image.asset("images/welcome_background.jpg"),
                 Container(

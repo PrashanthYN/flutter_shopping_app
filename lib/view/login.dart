@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo_two_login/apppreferences/apppreferences.dart';
 import 'package:flutter_demo_two_login/model/user.dart';
 import 'package:flutter_demo_two_login/repository/repository.dart';
 
@@ -165,12 +166,19 @@ class LoginState extends State<LoginScreen>{
         _process_busy=false;
       });
 
+      //login event, true or false
       if(event){
-        //navigating to home screen.
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => HomeScreen()));
+
+       AppPreferences().setLoggedIn(userEmail).then((value) => {
+         if(value){
+           //navigating to home screen.
+           Navigator.push(
+           context,
+           MaterialPageRoute(
+               builder: (context) => HomeScreen()))
+         }
+
+       });
       }
 
     });
